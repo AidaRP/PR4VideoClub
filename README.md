@@ -1,4 +1,4 @@
-# PROYECTO NÚMERO 4; API DE UN VIDEOCLUB.
+# PROYECTO NÚMERO 4; 💽 API DE UN VIDEOCLUB. 📼
 
 EL proyecto es una API, la cual simula un videoclub que reparte peliculas a domicilio a los usuarios de diferentes localidades.
 
@@ -8,11 +8,11 @@ EL proyecto es una API, la cual simula un videoclub que reparte peliculas a domi
 El videoclub, nos pide el ejercicio que deberá constar de 3 tablas siendo estas; Usuarios, Peliculas y Pedidos.
 Las cuales anexionaremos desde la API a la BBDD (MySQL en este caso).
 
-## Tecnologías Utilizadas
+## Tecnologías Utilizadas 💻
 
 Las tecnologías implementadas, desde la creación de la API hasta su unión con la BBDD han sido:
 
-# API
+# API 📡
 1.- Node.JS
 2.- Express (Framework de Node.JS)
 3.- Nodemon
@@ -24,11 +24,11 @@ Las tecnologías implementadas, desde la creación de la API hasta su unión con
 9.- Bcrypt
 
 
-# BBDD (MySql)
+# BBDD (MySql)🐬
 Utilización del ORM Sequelize.
 
 
-## Estructura
+## Estructura🏢
 
 Utilizando la estructura MVC + la creación de un CRUD sencillo ha sido creada la estructuración de la API.
 
@@ -58,4 +58,4 @@ Con visual studio puedes ver el código y si lo que quieres es previsualizar la 
 
 
 ---
-⌨️ con ❤️ por [AidaRP](https://github.com/AidaRP) 😊
+⌨️ con 💙 por [AidaRP](https://github.com/AidaRP) 😊
