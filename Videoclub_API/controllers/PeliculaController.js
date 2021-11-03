@@ -1,13 +1,13 @@
-//IMPORTAMOS BASE DE DATOS
+//Importación BBDD
 const db = require("../models");
 const peliculas = db.pelicula;
-const Op = db.Sequelize.Op; //IMPORTAMOS FUNCIONES ORM DE SEQUELIZE
+const Op = db.Sequelize.Op; //Importación de las funciones ORM de Sequelize.
 
-const PeliculaController = {}; //CREAMOS EL OBJETO CONTROLADOR
+const PeliculaController = {}; //Creación del objeto controlador
 
 
 
-//OBTENEMOS LISTADO DE TODAS LAS PELÍCULAS
+//Adquisición del listado de todas las películas
 PeliculaController.getAll = (req, res) => {
 
     peliculas.findAll()
@@ -24,7 +24,7 @@ PeliculaController.getAll = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 
-//OBTENEMOS PELICULA POR ID
+//Adquisición de las películas por ID
 PeliculaController.getById = (req, res) => {
   const id = req.params.id;
 
@@ -47,7 +47,7 @@ PeliculaController.getById = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 
-//OBTENEMOS PELICULA POR TITULO
+//Obtención de las peliculas por su título
 PeliculaController.getByTitulo = (req, res) => {
 
   let titulo = req.params.titulo;
@@ -66,7 +66,7 @@ PeliculaController.getByTitulo = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 
-//OBTENEMOS PELICULA POR CIUDAD
+//Obtención de las películas por ciudad
 PeliculaController.getByCity = (req, res) => {
 
   let ciudad = req.params.ciudad;
@@ -85,7 +85,7 @@ PeliculaController.getByCity = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 
-//OBTENEMOS PELICULA POR CIUDAD Y POR DISPONIBILIDAD PARA SER ALQUILADA
+//Obtención de pelicula por relación con la ciudad y la disponibilidad para ser alquilada
 PeliculaController.getByCityAndRented = (req, res) => {
 
   let ciudad = req.params.ciudad;
@@ -105,7 +105,7 @@ PeliculaController.getByCityAndRented = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 
-//OBTENEMOS PELICULA POR GENERO
+//Obtención de película por género
 PeliculaController.getByGenre = (req, res) => {
 
   let genre = req.params.genero;
@@ -124,7 +124,7 @@ PeliculaController.getByGenre = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 
-//OBTENEMOS PELICULA POR ACTOR PRINCIPAL
+//Adquisición de película por actor principal
 PeliculaController.getByMainCharacter = (req, res) => {
 
   let actor = req.params.actor_principal;
@@ -143,10 +143,10 @@ PeliculaController.getByMainCharacter = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 
-//CREAMOS PELÍCULA NUEVA
+//Creación nueva película
 PeliculaController.create = (req, res) => {
 
-  if (req.user.usuario.rol == "administrador") {// HACEMOS QUE SOLO PUEDA CREARLO EL ADMINISTRADOR
+  if (req.user.usuario.rol == "administrador") {// Conceder permisos únicamente al administrador
     
           if (!req.body.titulo) {
             res.status(400).send({
@@ -182,10 +182,10 @@ PeliculaController.create = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 
-//ACTUALIZAMOS PELICULA EXISTENTE
+//Actualización de película ya existente
 PeliculaController.update = (req, res) => {
 
-  if (req.user.usuario.rol == "administrador") {// HACEMOS QUE SOLO PUEDA ACTUALIZARLO EL ADMINISTRADOR
+  if (req.user.usuario.rol == "administrador") {// Actualización permitida únicamente al administrador
 
           const id = req.params.id;
 
@@ -217,10 +217,10 @@ PeliculaController.update = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 
-//BORRAMOS PELICULA, BUSCANDO POR ID
+//Borrado de película con búsqueda por ID
 PeliculaController.delete = (req, res) => {
 
-  if (req.user.usuario.rol == "administrador") {// HACEMOS QUE SOLO PUEDA BORRARLO EL ADMINISTRADOR
+  if (req.user.usuario.rol == "administrador") {// Permiso de borrado único para el administrador
 
         const id = req.params.id;
 
