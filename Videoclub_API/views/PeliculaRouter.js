@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/auth.js');
 
-//Importo modelo de datos
+//Importación del modelo de datos.
 const PeliculaController = require('../controllers/PeliculaController');
 
-// End-points CRUD movies
+// End-points CRUD de las peliculas.
 router.get('/', PeliculaController.getAll);
 router.get('/:id', PeliculaController.getById);
 router.get('/titulo/:titulo', PeliculaController.getByTitulo);

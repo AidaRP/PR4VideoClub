@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
         res.status(401).json({ msg: "Acceso no autorizado" });
     } else {
 
-        // Comrpobar la validez de este token
+        // Comprobar la validez de este token
         let token = req.headers.authorization.split(" ")[1];
 
         // Comprobar la validez de este token
