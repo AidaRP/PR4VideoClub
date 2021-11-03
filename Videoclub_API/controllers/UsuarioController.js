@@ -6,7 +6,7 @@ const authConfig = require('../config/auth');
 const UsuarioController = {};
 
 
-//GESTIONAMOS LOGIN DE USUARIOS
+//Gestión login de usuarios
 UsuarioController.signIn = (req, res) => {
 
     let correo = req.body.correo;
@@ -18,7 +18,7 @@ UsuarioController.signIn = (req, res) => {
         if (!usuario) {
             res.status(404).json({ msg: "Usuario con este correo no encontrado" });
         } else {
-            if (bcrypt.compareSync(clave, usuario.clave)) { //COMPARA CONTRASEÑA INTRODUCIDA CON CONTRASEÑA GUARDADA, TRAS DESENCRIPTAR
+            if (bcrypt.compareSync(clave, usuario.clave)) { //Después de desincriptar compara la contraseña introducida con la guardada
                 let token = jwt.sign({ usuario: usuario }, authConfig.secret, {
                     expiresIn: authConfig.expires
                 });
@@ -37,14 +37,14 @@ UsuarioController.signIn = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 
-//GESTIONAMOS REGISTRO DE USUARIOS
+//Gestión del registro de usuarios
 UsuarioController.signUp = (req, res) => { 
 
-    if (req.user.usuario.rol == "administrador") {//COMPROBAMOS SI ESTÁ LOGADO COMO ADMINISTRADOR
+    if (req.user.usuario.rol == "administrador") {//Comprobación del log como administrador
 
           let clave = req.body.clave;
 
-          if (clave.length >= 8) {//SE ENCRIPTA LA CONTRASEÑA SI MÍNIMO TIENE 8 CARACTERES
+          if (clave.length >= 8) {//Encriptación de la contraseña teniendo esta 8 carácteres como mínimo
             var password = bcrypt.hashSync(req.body.clave, Number.parseInt(authConfig.rounds));   
 
             usuario.create({
@@ -81,13 +81,13 @@ UsuarioController.signUp = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 
-//OBTENEMOS LISTADO DE TODAS LOS USUARIOS
+//Obtención de listado de todos los usuarios
 
 
 
 UsuarioController.getAll = (req, res) => {
   
-    if (req.user.usuario.rol == "administrador") {//COMPROBAMOS SI ESTÁ LOGADO COMO ADMINISTRADOR
+    if (req.user.usuario.rol == "administrador") {//Comprobación del logado como administrador
 
             usuario.findAll()
               .then(data => {
@@ -108,12 +108,12 @@ UsuarioController.getAll = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 
-//OBTENEMOS UN UNICO USUARIO, BUSCANDO POR ID
+//Obtención de un único usuario mostrado por ID
 UsuarioController.getById = (req, res) => {
 
     const id = req.params.id;
 
-    if (req.user.usuario.rol == "administrador" || req.user.usuario.id == id) {// HACEMOS QUE SOLO PUEDA VERLO EL ADMINISTRADOR O EL USUARIO DUEÑO DEL PERFIL
+    if (req.user.usuario.rol == "administrador" || req.user.usuario.id == id) {// Vista única para el administrador y el usuario dueñx del perfil
 
         usuario.findByPk(id)
             .then(data => {
@@ -143,7 +143,7 @@ UsuarioController.update = (req, res) => {
 
         const id = req.params.id;
 
-        if (req.user.usuario.rol == "administrador" || req.user.usuario.id == id) {// HACEMOS QUE SOLO PUEDA ACTULIZARLO EL ADMINISTRADOR O EL USUARIO DUEÑO DEL PERFIL
+        if (req.user.usuario.rol == "administrador" || req.user.usuario.id == id) {// Actualización única para el administrador o usuario dueñx del perfil
 
               
             
@@ -173,12 +173,12 @@ UsuarioController.update = (req, res) => {
         }
 };
 
-//BORRAMOS A USUARIO, BUSCANDO POR ID
+//Borrado a usuario o buscado por ID
 UsuarioController.delete = (req, res) => {
 
     const id = req.params.id;
 
-    if (req.user.usuario.rol == "administrador" || req.user.usuario.id == id) {// HACEMOS QUE SOLO PUEDA BORRARLO EL ADMINISTRADOR O EL USUARIO DUEÑO DEL PERFIL
+    if (req.user.usuario.rol == "administrador" || req.user.usuario.id == id) {// Eliminación única permitada a administrador o usuario dueñx del perfil
 
             usuario.destroy({
                 where: { id: id }
@@ -208,10 +208,10 @@ UsuarioController.delete = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 
-//BORRAMOS TODOS LOS USUARIOS
+//Borrado de todos los usuarios
 UsuarioController.deleteAll = (req, res) => {
 
-  if (req.user.usuario.rol == "administrador") {// HACEMOS QUE SOLO PUEDA BORRARLO EL ADMINISTRADOR
+  if (req.user.usuario.rol == "administrador") {// Permiso único de borrado para el administrador
 
               usuario.destroy({
                 where: {},
