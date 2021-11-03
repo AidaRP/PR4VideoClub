@@ -2,17 +2,17 @@ const { pedido } = require('../models/index');
 const { pelicula } = require('../models/index');
 const { usuario } = require('../models/index');
 
-var peliculaModel  = require('../models').pelicula; //TRAIGO MODELO DE PELICULA, PARA MOSTRAR DATOS DE LAS PELICULAS
+var peliculaModel  = require('../models').pelicula; //Mostramos los datos de las peliculas adjuntando el modelo pelicula en una variable.
 
-var usuarioModel  = require('../models').usuario; //TRAIGO MODELO DE USUARIO, PARA MOSTRAR DATOS DE LAS USUARIOS
+var usuarioModel  = require('../models').usuario; //Mostramos los datos de los usuarios adjuntando el modelo usuario en una variable.
 
 const PedidoController = {};
 
 
-//OBTENEMOS LISTADO DE TODAS LOS PEDIDOS
+//Recibimos listado de todos los pedidos
 PedidoController.getAll = (req, res) => {
 
-  if (req.user.usuario.rol == "administrador") {// HACEMOS QUE SOLO PUEDA BORRARLO EL ADMINISTRADOR
+  if (req.user.usuario.rol == "administrador") {// Damos permiso de borrado únicamente al administrador
   
           pedido.findAll({include: [{ model:peliculaModel}, {model:usuarioModel}]})
             .then(data => {
@@ -33,13 +33,13 @@ PedidoController.getAll = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 
-//CREAMOS UN PEDIDO NUEVO
-//SE COMPROBARÁ QUE LA PELÍCULA Y EL USUARIO ESTÁN EN LA MISMA CIUDAD. DESPUÉS SE COMPROBARÁ SI LA PELÍCULA ESTÁ ALQUILADA O NO
+//Creación nuevo pedido
+//Comprobación de que la pelicula y la ciudad del usuario es la misma, posteriormente una comprobación del estado (alquilada o no) de la película.
 PedidoController.create = (req, res) => {
 
-  if (req.user.usuario.rol == "administrador" || req.user.usuario.id == req.body.usuarioId) {// HACEMOS QUE SOLO PUEDA BORRARLO EL ADMINISTRADOR
+  if (req.user.usuario.rol == "administrador" || req.user.usuario.id == req.body.usuarioId) {// Damos permiso de borrado únicamente al administrador
 
-                //COMPROBAMOS SI HAY ALGO EN EL BODY
+                //Comprobación del estado del Body
                 if (!req.body) {
                   res.status(400).send({
                     message: "El contenido no puede estar vacío."
@@ -47,9 +47,9 @@ PedidoController.create = (req, res) => {
                   return;
                 }
 
-                //COMPROBAMOS SI LA PELÍCULA ESTÁ EN LA MISMA CIUDAD DEL USUARIO
+                //Comprobación de que la pelicula esté en la misma ciudad que el usuario
 
-                //BUSCAMOS CIUDAD DE PELÍCULA
+                //Búsqueda de la ciudad en relación con la película
                 var ciudadUsuarioBuscado = "a";
 
                 usuario.findByPk(req.body.usuarioId)
@@ -69,13 +69,13 @@ PedidoController.create = (req, res) => {
                     });
                   });
 
-              //BUSCAMOS CIUDAD DE USUARIO
+              //Búsqueda ciudad de usuario
                 var peliculaBuscada = "q";
                 var ciudadPeliculaBuscada = "b";
                 pelicula.findByPk(req.body.peliculaId)
                   .then(data => {
                     
-                    //COMPROBAMOS SI LAS 2 CIUDADES SON IGUALES Y SI LA PELÍCULA ESTÁ YA ALQUILADA
+                    //Comprobación de que haya relación entre película y ciudad y que la película no esté alquilada
                     if (data) {
                       peliculaBuscada = data;
                       ciudadPeliculaBuscada = data.ciudad;
@@ -143,16 +143,16 @@ PedidoController.create = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 
-//BORRAMOS UN PEDIDO
+//Borrado de pedido
 PedidoController.delete = (req, res) => {
 
-  if (req.user.usuario.rol == "administrador") {// HACEMOS QUE SOLO PUEDA BORRARLO EL ADMINISTRADOR
+  if (req.user.usuario.rol == "administrador") {// Permiso de borrado únicamente al administrador
 
         const id = req.params.id;
 
         let idPelicula = 0;
-
-        //BUSCAMOS PEDIDO QUE QUEREMOS BORRAR Y SACAMOS LA PELICULA QUE ESTÁ GUARDADA EN EL PEDIDO
+      
+        //Búsqueda del pedido que queremos eliminar y extraemos la pelicula guardada en el pedido
         pedido.findByPk(id)
               .then(data => {
                   if (data) {
@@ -170,11 +170,11 @@ PedidoController.delete = (req, res) => {
                   });
               });
 
-        //ELIMINAMOS PEDIDO
+        //Eliminación del pedido
         pedido.destroy({ where: { id: id }})
             .then(num => {
                 if (num == 1) {
-                        pelicula.update( {alquilada: false},{ where: { id: idPelicula }}) //ACTUALIZAMOS PELICULA PARA QUE SE PUEDA VOLVER A ALQUILAR
+                        pelicula.update( {alquilada: false},{ where: { id: idPelicula }}) //Actualización de película para poder volverla a activar
                         .then(num => {
                           if (num == 1) {
                             // res.send({
